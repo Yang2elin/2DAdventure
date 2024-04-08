@@ -60,5 +60,6 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.formatOnType": true,
-    "diffEditor.codeLens": false
+    "diffEditor.codeLens": false,
+    "editor.fontSize": 20
 }

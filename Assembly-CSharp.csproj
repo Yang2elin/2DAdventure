@@ -77,7 +77,10 @@
     <Compile Include="Assets\Scripts\Player\AanimationBehavior\AttackFinish.cs" />
     <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\General\Character.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\Settings\Input System\PlayerInputControl.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObject\PlayAudioEventSO.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioDefination.cs" />
     <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\CharacterEventSO.cs" />
