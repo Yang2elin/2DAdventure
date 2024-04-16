@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bounds
   - Water
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -46,7 +47,7 @@ TagManager:
   - name: Back
     uniqueID: 2359107495
     locked: 0
-  - name: Platform
+  - name: Mid
     uniqueID: 579670175
     locked: 0
   - name: Front

@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     public float hurtForce; //受伤被击退的力
 
     private float runSpeed; //跑步速度
-    private float walkSpeed => speed / 2.5f;  //走路速度，lambda表达式每次调用都会执行一下
+    private float walkSpeed => speed / 3.5f;  //走路速度，lambda表达式每次调用都会执行一下
 
 
     #region 周期函数
@@ -105,8 +105,8 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     #region 按键绑定
     public void Move()
     { //行动
-        if (!isCrouch) //下蹲状态禁止移动
-            rb.velocity = new Vector2(speed * Time.deltaTime * inputDirection.x, rb.velocity.y);//左右移动 Vector2表示二维空间向量 rb.velocity对应unity中Rigidbody2D的velocity前面rb获取了组件 x速度=速度*时间的修正*x方向
+      //if (!isCrouch) //下蹲状态禁止移动
+        rb.velocity = new Vector2(speed * Time.deltaTime * inputDirection.x, rb.velocity.y);//左右移动 Vector2表示二维空间向量 rb.velocity对应unity中Rigidbody2D的velocity前面rb获取了组件 x速度=速度*时间的修正*x方向
 
         int faceDir = (int)transform.localScale.x;  //定义获取人物x轴的方向，transform组件是每个game object默认都有的无需代码获取
         if (inputDirection.x > 0)
