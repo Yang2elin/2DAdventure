@@ -72,6 +72,7 @@ public class Sign : MonoBehaviour
     {
         if (canPress)
         {
+            //targetItem.GetComponent<AudioDefination>()?.PlayAudioClip();
             targetItem.TriggerAction(); //调用接口的方法，再由接口分配不同obj的不同方法
         }
     }

@@ -82,11 +82,13 @@
     <Compile Include="Assets\Scripts\Utilities\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\Settings\Input System\PlayerInputControl.cs" />
+    <Compile Include="Assets\Scripts\Transition\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\PlayAudioEventSO.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioDefination.cs" />
     <Compile Include="Assets\Scripts\Utilities\BackGround.cs" />
     <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Transition\TeleportPoint.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\CharacterEventSO.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimation.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerStatBar.cs" />

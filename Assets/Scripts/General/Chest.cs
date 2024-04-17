@@ -19,7 +19,7 @@ public class Chest : MonoBehaviour, IInteractable
     }
     public void TriggerAction()
     {
-        Debug.Log("Chest opened!");
+        //Debug.Log("Chest opened!");
         if (!isDone)
         {
             //this.gameObject.tag = "Interactable";

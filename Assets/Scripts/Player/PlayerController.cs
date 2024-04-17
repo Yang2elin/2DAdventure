@@ -33,6 +33,13 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     private float runSpeed; //跑步速度
     private float walkSpeed => speed / 3.5f;  //走路速度，lambda表达式每次调用都会执行一下
 
+    [Header("音效")]
+    //public AudioDefination jumpAudio;   //跳跃音效
+    //public AudioDefination deadAudio;   //死亡音效
+    private AudioDefination audioDefination;//
+    public AudioClip jumpAudioClip; //跳跃音效
+    public AudioClip deadAudioClip; //死亡音效
+
 
     #region 周期函数
     private void Awake()
@@ -45,6 +52,7 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
         originalSize = capsuleCollider2D.size;
         playerAnimation = GetComponent<PlayerAnimation>();  //获取PlayerAnimation脚本
         coll = GetComponent<Collider2D>();   //获取碰撞体
+        audioDefination = GetComponent<AudioDefination>();  //获取AudioDefination脚本
 
         inputControl.GamePlay.Attack.started += PlayerAttack;
 
@@ -142,6 +150,10 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
         if (physicsCheck.isGround)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);    //添加向上方向的力来跳跃
+            //GetComponent<AudioDefination>()?.PlayAudioClip();  //播放跳跃音效
+            //jumpAudio?.PlayAudioClip(); //播放跳跃音效
+            audioDefination.audioClip = jumpAudioClip; //跳跃音效
+            audioDefination.PlayAudioClip(); //播放跳跃音效
         }
     }
 
@@ -166,6 +178,9 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     {
         isDead = true;
         inputControl.GamePlay.Disable();    //禁止游玩操作
+
+        audioDefination.audioClip = deadAudioClip; //死亡音效
+        audioDefination.PlayAudioClip(); //播放死亡音效
     }
     #endregion
 
