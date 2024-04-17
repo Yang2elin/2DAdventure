@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XInput;
 
+
 public class Sign : MonoBehaviour
 {
     private PlayerInputControl playerInput;
     public GameObject signSprite;   //获取组件
     private Animator anim; //用来获取子物体挂载的动画
     public Transform playerTransform;   //用来获取player的transform
+    private IInteractable targetItem;  //用来获取IInteractable接口
     private bool canPress;  //是否有按下条件
 
     private void Awake()
@@ -24,7 +26,9 @@ public class Sign : MonoBehaviour
     private void OnEnable()
     {
         InputSystem.onActionChange += OnActionChange;  //unity自带方法检测输入设备；
+        playerInput.GamePlay.Confirm.started += OnConfirm;
     }
+
 
     private void OnActionChange(object obj, InputActionChange actionChange)
     {
@@ -56,10 +60,19 @@ public class Sign : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             canPress = true;
+            targetItem = other.GetComponent<IInteractable>();
         }
     }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         canPress = false;
+    }
+    private void OnConfirm(InputAction.CallbackContext context)
+    {
+        if (canPress)
+        {
+            targetItem.TriggerAction(); //调用接口的方法，再由接口分配不同obj的不同方法
+        }
     }
 }
