@@ -18,7 +18,7 @@ public class BoarChaseState : BaseState
     {
         if (currentEnemy.lostTimeCointer <= 0)    //达到丢失目标时间
         {
-            currentEnemy.SwitchState(NPCState.Patro);   //修改回巡逻状态
+            currentEnemy.SwitchState(NPCState.Patrol);   //修改回巡逻状态
         }
         //判断不在地面上||撞左墙||撞右墙 不做等待直接追击
         if (!currentEnemy.physicsCheck.isGround || currentEnemy.physicsCheck.touchLeftWall && currentEnemy.faceDir.x < 0 || currentEnemy.physicsCheck.touchRightWall && currentEnemy.faceDir.x > 0)

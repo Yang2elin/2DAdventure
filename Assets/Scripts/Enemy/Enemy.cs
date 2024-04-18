@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+[RequireComponent(typeof(Rigidbody2D), typeof(PhysicsCheck), typeof(Animator))] //必要组件 这样挂载脚本时会自动添加这些组件
 
 public class Enemy : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
     private BaseState currentState; //当前状态
     protected BaseState patrolState;    //巡逻状态
     protected BaseState chaseState; //追击状态
+    protected BaseState skillState; //技能状态
 
     //onenable周期函数 当被激活时
     private void OnEnable()
@@ -78,7 +80,10 @@ public class Enemy : MonoBehaviour
 
     public virtual void Move()
     {
-        rb.velocity = new Vector2(faceDir.x * currentSpeed * Time.deltaTime, rb.velocity.y);
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("snailPreMove") && !anim.GetCurrentAnimatorStateInfo(0).IsName("snailRecover"))  //如果不是蜗牛的准备动画&&恢复动画
+        {
+            rb.velocity = new Vector2(faceDir.x * currentSpeed * Time.deltaTime, rb.velocity.y);
+        }
     }
 
     public void TimeCounter()   //计时器
@@ -86,7 +91,7 @@ public class Enemy : MonoBehaviour
         if (wait)   //停止巡逻等待
         {
             waitTimeCounter -= Time.deltaTime;
-            if (waitTimeCounter <= 0)
+            if (waitTimeCounter < 0)
             {
                 wait = false;
                 waitTimeCounter = witeTime;
@@ -115,8 +120,9 @@ public class Enemy : MonoBehaviour
     {
         var newState = state switch
         {
-            NPCState.Patro => patrolState,
+            NPCState.Patrol => patrolState,
             NPCState.Chase => chaseState,
+            NPCState.Skill => skillState,
             _ => null
         };
         currentState.OnExit();
