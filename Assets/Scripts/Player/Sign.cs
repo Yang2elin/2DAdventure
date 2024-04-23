@@ -29,6 +29,10 @@ public class Sign : MonoBehaviour
         playerInput.GamePlay.Confirm.started += OnConfirm;
     }
 
+    // private void OnDisable()
+    // {
+    //     canPress = false;
+    // }
 
     private void OnActionChange(object obj, InputActionChange actionChange)
     {

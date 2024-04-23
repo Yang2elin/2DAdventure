@@ -9,15 +9,24 @@ public class UIManager : MonoBehaviour
 
     [Header("事件监听")]
     public CharacterEventSO healthEvent;
+    public SceneLoadEventSO loadEvent;
 
     private void OnEnable()
     {   //注册事件
         healthEvent.OnEventRaised += OnHealthEvent;
+        loadEvent.LoadRequestEvent += OnLoadEvent;
     }
 
     private void OnDisable()
     {  //取消事件
         healthEvent.OnEventRaised -= OnHealthEvent;
+        loadEvent.LoadRequestEvent -= OnLoadEvent;
+    }
+
+    private void OnLoadEvent(GameSceneSO scenToLoad, Vector3 arg1, bool arg2)
+    {
+        var isMenu = scenToLoad.sceneType == SceneType.Menu;  //判断是否为菜单场景
+        playerStatBar.gameObject.SetActive(!isMenu);
     }
 
     private void OnHealthEvent(Character character) //事件注册以后执行

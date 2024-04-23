@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -5,6 +6,9 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    [Header("事件监听")]
+    public VoidEventSO afterSceneLoadedEvent;
+
     private CinemachineConfiner2D confiner2D;   //摄像机可移动范围
     public CinemachineImpulseSource impulseSource;  //摄像机振动源
     public VoidEventSO cameraShakeEvent;
@@ -15,10 +19,17 @@ public class CameraControl : MonoBehaviour
     private void OnEnable()
     {
         cameraShakeEvent.OnEventRaised += OnCameraShakeEvent;
+        afterSceneLoadedEvent.OnEventRaised += OnAfterSceneLoadedEvent;
     }
     private void OnDisable()
     {
         cameraShakeEvent.OnEventRaised -= OnCameraShakeEvent;
+        afterSceneLoadedEvent.OnEventRaised -= OnAfterSceneLoadedEvent;
+    }
+
+    private void OnAfterSceneLoadedEvent()
+    {
+        GetNewCameraBounds();
     }
 
     private void Awake()
@@ -26,10 +37,10 @@ public class CameraControl : MonoBehaviour
         confiner2D = GetComponent<CinemachineConfiner2D>();
 
     }
-    private void Start()
-    {
-        GetNewCameraBounds();
-    }
+    // private void Start()
+    // {
+    //     GetNewCameraBounds();
+    // }
     private void GetNewCameraBounds()
     {
         var obj = GameObject.FindGameObjectWithTag("Bounds");   //找到带bounds标签的物体

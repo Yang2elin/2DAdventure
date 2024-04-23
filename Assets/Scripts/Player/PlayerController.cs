@@ -7,6 +7,9 @@ using Unity.Collections;
 using System;
 public class PlayerController : MonoBehaviour   //PlayerController继承于unity自有方法MonoBehaviour
 {
+    [Header("监听事件")]
+    public SceneLoadEventSO loadEvent;    //监听开始加载场景事件
+    public VoidEventSO afterSceneLoadedEvent;    //监听场景加载完成事件
     public PlayerInputControl inputControl; //定义变量 PlayerInputControl是InputSyetem文件夹中生成的
     private Rigidbody2D rb;  //定义变量 类型刚体
     private PhysicsCheck physicsCheck;
@@ -33,12 +36,13 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     private float runSpeed; //跑步速度
     private float walkSpeed => speed / 3.5f;  //走路速度，lambda表达式每次调用都会执行一下
 
-    [Header("音效")]
+    //[Header("音效")]
     //public AudioDefination jumpAudio;   //跳跃音效
     //public AudioDefination deadAudio;   //死亡音效
     private AudioDefination audioDefination;//
     public AudioClip jumpAudioClip; //跳跃音效
     public AudioClip deadAudioClip; //死亡音效
+    public AudioClip hurtAudioClip; //受伤音效
 
 
     #region 周期函数
@@ -82,12 +86,18 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     private void OnEnable()
     {   //player在unity中被勾选显示出来的话执行
         inputControl.Enable();
+        loadEvent.LoadRequestEvent += OnloadEvent; //注册事件
+        afterSceneLoadedEvent.OnEventRaised += OnAfterSceneLoadedEvent;
     }
 
     private void OnDisable()
     {  //player在unity中未被勾选的话执行
         inputControl.Disable();
+        loadEvent.LoadRequestEvent -= OnloadEvent; //注销事件
+        afterSceneLoadedEvent.OnEventRaised -= OnAfterSceneLoadedEvent;
     }
+
+
 
     private void Update()
     { //代码周期性函数 游戏中每一帧都会执行
@@ -109,6 +119,17 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
 
     }
     #endregion
+
+    private void OnloadEvent(GameSceneSO arg0, Vector3 arg1, bool arg2)
+    {
+        inputControl.GamePlay.Disable();    //禁止游玩操作
+        //Debug.Log("PlayerController OnloadEvent");
+    }
+    private void OnAfterSceneLoadedEvent()
+    {
+        inputControl.GamePlay.Enable();    //允许游玩操作
+        //Debug.Log("PlayerController OnAfterSceneLoadedEvent");
+    }
 
     #region 按键绑定
     public void Move()
@@ -166,21 +187,28 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     #endregion
 
     #region Unity Event事件
-    public void GetHurt(Transform attacker)    //传入攻击者的坐标
+    //传入攻击者的坐标
+    public void GetHurt(Transform attacker)
     {
-        isHurt = true;  //修改人物状态为正在受伤
-        rb.velocity = Vector2.zero; //受伤反弹前先将人物速度归零
-        Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;  //给x轴攻击者反方向 归一化
-        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);  //方向*反弹力 2D瞬时力
+        //修改人物状态为正在受伤
+        isHurt = true;
+        //受伤反弹前先将人物速度归零
+        rb.velocity = Vector2.zero;
+        //给x轴攻击者反方向 归一化
+        Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
+        //方向*反弹力 2D瞬时力
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+
+        audioDefination.audioClip = hurtAudioClip; //受伤音效
+        audioDefination.PlayAudioClip(); //播放受伤音效
     }
 
     public void PlayerDead()
     {
+        // audioDefination.audioClip = deadAudioClip;
+        // audioDefination.PlayAudioClip(); //播放死亡音效
         isDead = true;
         inputControl.GamePlay.Disable();    //禁止游玩操作
-
-        audioDefination.audioClip = deadAudioClip; //死亡音效
-        audioDefination.PlayAudioClip(); //播放死亡音效
     }
     #endregion
 
