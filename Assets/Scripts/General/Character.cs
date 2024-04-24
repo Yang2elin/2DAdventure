@@ -5,6 +5,10 @@ using UnityEngine.Events;   //unity事件库
 
 public class Character : MonoBehaviour
 {
+    [Header("事件监听")]
+    //public VoidEventSO newGameEvent;
+    public VoidEventSO afterSceneLoadEvent;
+
     [Header("基本属性")]
     public float maxHealth; //最大血量
     public float currentHealth; //当前血量
@@ -17,11 +21,24 @@ public class Character : MonoBehaviour
     public UnityEvent<Character> OnHealthChange;
     public UnityEvent<Transform> OnTakeDamage;  //创建事件 传进去transform
     public UnityEvent OnDie;    //死亡事件
+    //public UnityEvent OnGameOverCheck;   //游戏结束事件
 
-    private void Start()
+    private void NewGame()
     {
         currentHealth = maxHealth;  //新开始游戏当前血量是最大值
         OnHealthChange?.Invoke(this);
+        Debug.Log("reset health");
+    }
+
+    private void OnEnable()
+    {
+        afterSceneLoadEvent.OnEventRaised += NewGame;
+        Chest.OnChestOpened.AddListener(HealPlayer);
+    }
+    private void OnDisable()
+    {
+        afterSceneLoadEvent.OnEventRaised -= NewGame;
+        Chest.OnChestOpened.RemoveListener(HealPlayer);
     }
 
     private void Update()
@@ -47,8 +64,25 @@ public class Character : MonoBehaviour
 
     }
 
+
+    private void HealPlayer()
+    {
+        // 在这里实现加血逻辑，这里简单地增加20点生命值
+        currentHealth += 100;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        OnHealthChange?.Invoke(this);
+        Debug.Log("Player healed! Current health: " + currentHealth);
+    }
+
     public void TakeDamage(Attack attacker) //从攻击者接收伤害
     {
+        // if (attacker.CompareTag("GameOverCheck"))//如果标签是GameOverCheck
+        // {
+        //     OnGameOverCheck?.Invoke();  //触发游戏结束事件
+        // }
         if (invuluerable)
             return;
         else

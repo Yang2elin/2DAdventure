@@ -11,14 +11,22 @@ public class SceneLoader : MonoBehaviour
 {
     public Transform playerTrans;//因为player所在场景不会被unload所以可以直接拖拽传递不会丢失
     public Vector3 firstPosition;
+    public Vector3 menuPosition;
+
+
     [Header("事件监听")]
     public SceneLoadEventSO loadEventSO;
-    public GameSceneSO firstLoadScene;
+    public VoidEventSO newGameEvent;
+
 
     [Header("广播")]
     public VoidEventSO afterSceneLoadedEvent;
     public FadeEventSO fadeEvent;
+    public SceneLoadEventSO unloadedSceneEvent;
 
+    [Header("场景")]
+    public GameSceneSO firstLoadScene;
+    public GameSceneSO menuScene;
     private GameSceneSO currentLoadedScene;
     private GameSceneSO locationToLoad;
     private Vector3 posToGo;
@@ -29,7 +37,8 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
-        NewGame();
+        //NewGame();
+        loadEventSO.RaiseLoadRequestEvent(menuScene, menuPosition, true);
     }
 
     private void Awake()
@@ -39,17 +48,20 @@ public class SceneLoader : MonoBehaviour
         //Addressables.LoadSceneAsync(firstLoadScene.sceneReference, LoadSceneMode.Additive);
         //currentLoadedScene = firstLoadScene;
         //currentLoadedScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+
     }
 
     //注册事件
     private void OnEnable()
     {
         loadEventSO.LoadRequestEvent += OnLoadRequestEvent;
+        newGameEvent.OnEventRaised += NewGame;
     }
     //注销事件
     private void OnDisable()
     {
         loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
+        newGameEvent.OnEventRaised -= NewGame;
     }
 
     private void NewGame()
@@ -95,6 +107,8 @@ public class SceneLoader : MonoBehaviour
         }
         yield return new WaitForSeconds(fadeDuration);  //等待填写的渐变时间以后
 
+        unloadedSceneEvent.RaiseLoadRequestEvent(locationToLoad, posToGo, true);
+
 
         yield return currentLoadedScene.sceneReference.UnLoadScene();  //卸载当前场景
 
@@ -126,13 +140,14 @@ public class SceneLoader : MonoBehaviour
 
         if (fadeScreen)
         {
+
             fadeEvent.FadeOut(fadeDuration);  //渐变
         }
 
         if (currentLoadedScene.sceneType != SceneType.Menu)
         {
             afterSceneLoadedEvent.RaiseEvent();
-            Debug.Log("no menu");
+            //Debug.Log("no menu");
         }
     }
 }

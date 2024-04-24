@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     [Header("监听事件")]
     public SceneLoadEventSO loadEvent;    //监听开始加载场景事件
     public VoidEventSO afterSceneLoadedEvent;    //监听场景加载完成事件
+
+
     public PlayerInputControl inputControl; //定义变量 PlayerInputControl是InputSyetem文件夹中生成的
     private Rigidbody2D rb;  //定义变量 类型刚体
     private PhysicsCheck physicsCheck;
@@ -29,8 +31,10 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     public bool isHurt; //正在受伤
     public bool isDead; //死亡
     public bool isAttack;   //正在攻击
+    public bool wallJump;   //蹬墙跳
     public float speed; //定义变量获取速度 速度可以在unity里输入
     public float jumpForce; //跳跃的力
+    public float wallJumpForce;//蹬墙跳的力
     public float hurtForce; //受伤被击退的力
 
     private float runSpeed; //跑步速度
@@ -135,7 +139,11 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     public void Move()
     { //行动
       //if (!isCrouch) //下蹲状态禁止移动
-        rb.velocity = new Vector2(speed * Time.deltaTime * inputDirection.x, rb.velocity.y);//左右移动 Vector2表示二维空间向量 rb.velocity对应unity中Rigidbody2D的velocity前面rb获取了组件 x速度=速度*时间的修正*x方向
+        if (!wallJump)
+        {
+            rb.velocity = new Vector2(speed * Time.deltaTime * inputDirection.x, rb.velocity.y);//左右移动 Vector2表示二维空间向量 rb.velocity对应unity中Rigidbody2D的velocity前面rb获取了组件 x速度=速度*时间的修正*x方向
+
+        }
 
         int faceDir = (int)transform.localScale.x;  //定义获取人物x轴的方向，transform组件是每个game object默认都有的无需代码获取
         if (inputDirection.x > 0)
@@ -175,6 +183,11 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
             //jumpAudio?.PlayAudioClip(); //播放跳跃音效
             audioDefination.audioClip = jumpAudioClip; //跳跃音效
             audioDefination.PlayAudioClip(); //播放跳跃音效
+        }
+        if (physicsCheck.onWall)
+        {
+            rb.AddForce(new Vector2(-inputDirection.x, 2.5f) * wallJumpForce, ForceMode2D.Impulse);    //添加斜向上方向的力来跳跃
+            wallJump = true;
         }
     }
 
@@ -216,6 +229,20 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     private void CheckState()
     {
         coll.sharedMaterial = physicsCheck.isGround ? fullFriction : noFriction;
+        if (physicsCheck.onWall)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2f);
+        }
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        }
+
+        if (wallJump && rb.velocity.y < 0f)
+        {
+            wallJump = false;
+        }
+
     }
     #endregion
 }

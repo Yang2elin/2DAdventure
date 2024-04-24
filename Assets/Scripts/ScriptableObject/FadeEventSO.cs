@@ -24,8 +24,14 @@ public class FadeEventSO : ScriptableObject
     /// <param name="duration"></param>
     public void FadeOut(float duration)
     {
+        RaiseEvent(Color.white, 0, false);
+        // StartCoroutine(BlackWait());
         RaiseEvent(Color.clear, duration, false);
     }
+    // private IEnumerator BlackWait(){
+    //     yield return new WaitForSeconds(1);
+
+    // }
 
     public void RaiseEvent(Color target, float duration, bool fadeIn)
     {

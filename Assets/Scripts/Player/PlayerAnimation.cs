@@ -29,6 +29,7 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("isCrouch", playerController.isCrouch);
         anim.SetBool("isDead", playerController.isDead);
         anim.SetBool("isAttack", playerController.isAttack);    //将isAttack传给animator
+        anim.SetBool("onWall", physicsCheck.onWall);    //将onWall传给animator
     }
 
     public void PlayHurt()  //受伤动画触发器

@@ -83,10 +83,12 @@
     <Compile Include="Assets\Scripts\General\Character.cs" />
     <Compile Include="Assets\Scripts\Utilities\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\General\GameOverCheck.cs" />
     <Compile Include="Assets\Scripts\Enemy\SnailSkillState.cs" />
     <Compile Include="Assets\Settings\Input System\PlayerInputControl.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\GameSceneSO.cs" />
     <Compile Include="Assets\Scripts\Transition\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\Menu.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\PlayAudioEventSO.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioDefination.cs" />
     <Compile Include="Assets\Scripts\Utilities\BackGround.cs" />

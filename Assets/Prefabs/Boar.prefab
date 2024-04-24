@@ -232,8 +232,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d45bcb36b1469d4d99795f3b09bb45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  afterSceneLoadEvent: {fileID: 11400000, guid: 8e995c237ed106048a63985629350404, type: 2}
   maxHealth: 200
-  currentHealth: 0
+  currentHealth: 100
   invulnerableDuration: 0.5
   invulnerableCounter: 0
   invuluerable: 0
