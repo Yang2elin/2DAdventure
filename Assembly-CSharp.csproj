@@ -82,12 +82,16 @@
     <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\General\Character.cs" />
     <Compile Include="Assets\Scripts\Utilities\IInteractable.cs" />
+    <Compile Include="Assets\Scripts\Transition\InitialLoad.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\General\GameOverCheck.cs" />
     <Compile Include="Assets\Scripts\Enemy\SnailSkillState.cs" />
     <Compile Include="Assets\Settings\Input System\PlayerInputControl.cs" />
+    <Compile Include="Assets\Scripts\Enemy\BeePatrolState.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\GameSceneSO.cs" />
+    <Compile Include="Assets\Scripts\Enemy\BeeChaseState.cs" />
     <Compile Include="Assets\Scripts\Transition\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Bee.cs" />
     <Compile Include="Assets\Scripts\UI\Menu.cs" />
     <Compile Include="Assets\Scripts\ScriptableObject\PlayAudioEventSO.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioDefination.cs" />
@@ -470,6 +474,26 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>D:\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>D:\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>D:\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>D:\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.GradleProject">
+      <HintPath>D:\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="mscorlib">

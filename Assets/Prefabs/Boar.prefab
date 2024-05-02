@@ -233,8 +233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   afterSceneLoadEvent: {fileID: 11400000, guid: 8e995c237ed106048a63985629350404, type: 2}
-  maxHealth: 200
-  currentHealth: 100
+  maxHealth: 50
+  currentHealth: 50
   invulnerableDuration: 0.5
   invulnerableCounter: 0
   invuluerable: 0
@@ -334,7 +334,9 @@ MonoBehaviour:
   isGround: 0
   touchLeftWall: 0
   touchRightWall: 0
+  onWall: 0
   manual: 1
+  isPlayer: 0
   grandLayer:
     serializedVersion: 2
     m_Bits: 64

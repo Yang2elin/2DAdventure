@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    Rigidbody2D rb; // 敌人刚体
+    [HideInInspector] public Rigidbody2D rb; // 敌人刚体
     [HideInInspector] public PhysicsCheck physicsCheck;  // 物理检测
     [HideInInspector] public Animator anim;  // 敌人动画 protected只能让子类访问 public所有人都可以访问
     public Transform attacker;  // 攻击范围
@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     public Vector2 checkSize;   //检测盒尺寸
     public float checkDistance; //检测距离
     public LayerMask attackLayer;   //检测图层
+    public Vector3 spwanPoint;   //生成点
 
     [Header("计时器")]
     public float witeTime; // 等待时间
@@ -52,6 +53,7 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         physicsCheck = GetComponent<PhysicsCheck>();
         currentSpeed = normalSpeed;
+        spwanPoint = transform.position;
     }
 
     //逻辑判断周期函数持续执行
@@ -110,7 +112,7 @@ public class Enemy : MonoBehaviour
     }
 
     //发现玩家
-    public bool FoundPlayer()
+    public virtual bool FoundPlayer()
     {
         return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, checkSize, 0, faceDir, checkDistance, attackLayer);    //原点 尺寸 角度 方向 检测距离 图层
     }
@@ -174,7 +176,12 @@ public class Enemy : MonoBehaviour
     }
     #endregion
 
-    private void OnDrawGizmos()
+    public virtual Vector3 GetNewPoint()
+    {
+        return transform.position;
+    }
+
+    public virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position + (Vector3)centerOffset + new Vector3(checkDistance * -transform.localScale.x, 0), 0.2f);
     }

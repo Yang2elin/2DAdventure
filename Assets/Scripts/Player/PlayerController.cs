@@ -49,9 +49,18 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
     public AudioClip hurtAudioClip; //受伤音效
 
 
+    // //TODO暂停菜单
+    // public GameSceneSO sceneToGo;
+    // public Vector3 positionToGo;
+    // public SceneLoadEventSO loadEventSO;
+    //public GameOverCheck gameOverCheck;
+
+
     #region 周期函数
     private void Awake()
     {  //游戏启动时
+        //gameOverCheck = GetComponent<GameOverCheck>();
+
         rb = GetComponent<Rigidbody2D>();   //获得Rigidbody2D类型的Component
         physicsCheck = GetComponent<PhysicsCheck>();
         inputControl = new PlayerInputControl();    //不是组件是脚本所以new创建实例实例化
@@ -222,6 +231,10 @@ public class PlayerController : MonoBehaviour   //PlayerController继承于unity
         // audioDefination.PlayAudioClip(); //播放死亡音效
         isDead = true;
         inputControl.GamePlay.Disable();    //禁止游玩操作
+
+        //TODO暂停菜单
+        //loadEventSO.RaiseLoadRequestEvent(sceneToGo, positionToGo, true);   //死亡回主界面
+        //gameOverCheck.ReSetGame();
     }
     #endregion
 

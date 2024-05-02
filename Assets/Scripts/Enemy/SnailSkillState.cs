@@ -17,6 +17,7 @@ public class SnailSkillState : BaseState
 
         currentEnemy.GetComponent<Character>().invuluerable = true;
         currentEnemy.GetComponent<Character>().invulnerableCounter = currentEnemy.lostTimeCointer;
+        //currentEnemy.GetComponent<Attack>().damage = 0;
     }
 
     public override void LogicUpdate()
@@ -40,6 +41,7 @@ public class SnailSkillState : BaseState
         currentEnemy.anim.SetBool("hide", false);
         //currentEnemy.anim.ResetTrigger("skill");
         currentEnemy.GetComponent<Character>().invuluerable = false;
+        //currentEnemy.GetComponent<Attack>().damage = 10;
     }
 
 }

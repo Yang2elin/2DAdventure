@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
     {
         currentHealth = maxHealth;  //新开始游戏当前血量是最大值
         OnHealthChange?.Invoke(this);
-        Debug.Log("reset health");
+        //Debug.Log("reset health");
     }
 
     private void OnEnable()
@@ -67,7 +67,7 @@ public class Character : MonoBehaviour
 
     private void HealPlayer()
     {
-        // 在这里实现加血逻辑，这里简单地增加20点生命值
+        // 在这里实现加血逻辑，这里加100点生命值
         currentHealth += 100;
         if (currentHealth > maxHealth)
         {
@@ -83,7 +83,7 @@ public class Character : MonoBehaviour
         // {
         //     OnGameOverCheck?.Invoke();  //触发游戏结束事件
         // }
-        if (invuluerable)
+        if (invuluerable || attacker.damage <= 0)
             return;
         else
         {

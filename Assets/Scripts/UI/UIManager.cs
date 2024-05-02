@@ -11,6 +11,17 @@ public class UIManager : MonoBehaviour
     public CharacterEventSO healthEvent;
     public SceneLoadEventSO loadEvent;
 
+    [Header("事件监听")]
+    public GameObject mobileTouch;
+
+
+    private void Awake()
+    {
+#if UNITY_STANDALONE
+        mobileTouch.SetActive(false);
+#endif
+    }
+
     private void OnEnable()
     {   //注册事件
         healthEvent.OnEventRaised += OnHealthEvent;
